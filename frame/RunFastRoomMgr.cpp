@@ -22,6 +22,7 @@
 extern boost::int32_t g_server_id;
 
 RunFastRoomMgr::RunFastRoomMgr()
+    :guard_(GameObj::GetInstance()), connect_(guard_->gatewayconnector())
 {   
 
 }
@@ -232,7 +233,7 @@ void RunFastRoomMgr::AddRrivateRoom(std::int32_t owner, RoomInterface *room)
 void RunFastRoomMgr::AddRoomListener(RoomEventListener * listener)
 {
     //必须在Initialize前调用
-    DCHECK(obj_->gatewayconnector() == nullptr);
+    DCHECK(guard_->gatewayconnector() == nullptr);
     room_listeners_.push_back(listener);
 }
 
@@ -347,7 +348,7 @@ void RunFastRoomMgr::OnChangeRoom(PlayerInterface *player)
             result.Write(RunFast::ErrorCode::ERROR_Z_ROOM_PLAYING);
             result.End();
 
-            obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+            guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
             return;
         }
@@ -358,7 +359,7 @@ void RunFastRoomMgr::OnChangeRoom(PlayerInterface *player)
             result.Write(std::int32_t(0));
             result.End();
 
-            obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+            guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
             DLOG(INFO) << "RunFastGameMgr::OnChangeRoom() g_server_stopped is true";
             return;
@@ -392,7 +393,7 @@ void RunFastRoomMgr::OnFindRoom(PlayerInterface *player)
         result.Write(std::int32_t(0));
         result.End();
 
-        obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+        guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
         DLOG(INFO) << "RunFastGameMgr::OnFindRoom() g_server_stopped is true";
         return;
@@ -421,7 +422,7 @@ void RunFastRoomMgr::OnFindRoom(PlayerInterface *player)
         result.Write(RunFast::ErrorCode::ERROR_GLOD_ENTER_LIMIT);
         result.End();
 
-        obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+        guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
         DLOG(INFO) << "RunFastGameMgr::OnFindRoom() glod limit";
         return;
@@ -459,7 +460,7 @@ void RunFastRoomMgr::OnCreateRoom(PlayerInterface *player, assistx2::Stream *pac
         result.Write(std::int32_t(0));
         result.End();
 
-        obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+        connect_->SendTo(result.GetNativeStream());
 
         DLOG(INFO) << "RunFastGameMgr::OnCreateRoom() g_server_stopped is true";
         return;
@@ -474,7 +475,7 @@ void RunFastRoomMgr::OnCreateRoom(PlayerInterface *player, assistx2::Stream *pac
     auto room = player->GetRoomObject();
     if (room == nullptr)
     {
-        room_id = roommgr_->CreateRoomByType(mid, type, cost);
+        room_id = CreateRoomByType(mid, type, cost);
         if (room_id != 0)
         {
             if (isfreetime == false)
@@ -482,7 +483,7 @@ void RunFastRoomMgr::OnCreateRoom(PlayerInterface *player, assistx2::Stream *pac
                 auto pay = PlayCost(player, cost, isPayByOther, proxy_mid);
                 if (pay != 0)
                 {
-                    roommgr_->RemovePrivateRoom(room_id);
+                    RemovePrivateRoom(room_id);
                     err = pay;
                 }
             }
@@ -510,11 +511,11 @@ void RunFastRoomMgr::OnCreateRoom(PlayerInterface *player, assistx2::Stream *pac
     packet->Write(isNotEnter);
     packet->End();
 
-    obj_->gatewayconnector()->SendTo(packet->GetNativeStream());
+    guard_->gatewayconnector()->SendTo(packet->GetNativeStream());
 
     if (err == 0)
     {
-        auto room = roommgr_->GetRoomObject(room_id);
+        auto room = GetRoomObject(room_id);
         DCHECK(room != nullptr);
 
         auto table = new Table("", players);
@@ -540,44 +541,6 @@ void RunFastRoomMgr::OnCreateRoom(PlayerInterface *player, assistx2::Stream *pac
     }
 
     LOG(INFO) << " RunFastGameMgr::OnCreateRoom mid:=" << mid << ",err:=" << err;
-}
-
-void RunFastRoomMgr::OnDisbandRoom(PlayerInterface *player, assistx2::Stream *packet)
-{
-    std::int32_t roomid = packet->Read<std::int32_t>();
-
-    DLOG(INFO) << "RunFastGameMgr::OnDisbandRoom():"
-        << "roomid:=" << roomid << " mid:=" << player->GetUID();
-
-    auto room = player->GetRoomObject();
-    if (room != nullptr)
-    {
-        auto err = room->Disband(player);
-        if (err != 0)
-        {
-            DLOG(INFO) << "RunFastGameMgr::OnDisbandRoom(): Error "
-                << "roomid:=" << room->GetID() << " mid:=" << player->GetUID()
-                << " err:=" << err;
-        }
-        else
-        {
-            auto& players = RunFastTracer::getInstance()->GetDisbandPlayers();
-            DLOG(INFO) << "RunFastGameMgr::OnDisbandRoom(): size:=" << players.size();
-            for (auto iter : players)
-            {
-                auto it = players_.find(iter.first);
-                if (it != players_.end())
-                {
-                    RunFastTracer::getInstance()->SendDisbandMessage(iter.first);
-                }
-            }
-        }
-    }
-    else
-    {
-        DLOG(INFO) << "RunFastGameMgr::OnDisbandRoom(): player do not have room "
-            << " mid:=" << player->GetUID();
-    }
 }
 
 int32_t RunFastRoomMgr::OnLeaveRoom(PlayerInterface *player, int32_t err)
@@ -644,7 +607,7 @@ int32_t RunFastRoomMgr::OnEnterRoom(PlayerInterface *player, assistx2::Stream *p
         result.Write(std::int32_t(0));
         result.End();
 
-        obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+        guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
         DLOG(INFO) << "RunFastGameMgr::OnEnterRoom() g_server_stopped is true";
         return 0;
@@ -703,7 +666,7 @@ int32_t RunFastRoomMgr::OnEnterRoom(PlayerInterface *player, assistx2::Stream *p
         result.Write(0);
         result.End();
 
-        obj_->gatewayconnector()->SendTo(result.GetNativeStream());
+        guard_->gatewayconnector()->SendTo(result.GetNativeStream());
 
         DCHECK(player->GetRoomObject() == nullptr);
         DLOG(INFO) << "RunFastGameMgr::OnEnterRoom() Not Find Room mid:=" << player->GetUID();

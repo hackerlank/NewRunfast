@@ -38,8 +38,7 @@ private:
     void OnLoginEvent(assistx2::Stream * packet);
     void OnProxyTimer();
     void OnRobotTimer();
-    void OnEnterMatchHall(PlayerInterface * player,const assistx2::Stream& packet);
-    void OnLeaveMatchHall(PlayerInterface * player);
+
 
     void OnRouteMessage(assistx2::Stream * packet);
     void OnCloseServer();

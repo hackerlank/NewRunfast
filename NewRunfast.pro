@@ -4,33 +4,29 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    src/ConfigMgr.cpp \
-    game/RunFastGameMgr.cpp \
-    game/MatchProxy.cpp \
-    game/PlayerBase.cpp \
-    game/PlayerRoomManager.cpp \
-    game/RunFastGameMgr.cpp \
-    game/RunFastRobot.cpp \
-    game/RunFastRoomMgr.cpp \
+    frame/RunFastGameMgr.cpp \
+    frame/MatchProxy.cpp \
+    frame/PlayerBase.cpp \
+    frame/PlayerRoomManager.cpp \
+    frame/RunFastGameMgr.cpp \
+    frame/RunFastRobot.cpp \
+    frame/RunFastRoomMgr.cpp \
+    frame/game_obj.cpp \
+    frame/playermgr.cpp \
+    frame/playerinterface.cpp \
+    frame/RunFastRoomMgr.cpp \
+    frame/Player.cpp \
+    frame/RunFastRobotMgr.cpp \
     datacenter/datemanager.cc \
     datacenter/httpclient.cc \
     3rdpart/base64/base64.cc \
-    game/RunFastRoomMgr.cpp \
-    game/Player.cpp \
-    game/RunFastRobotMgr.cpp \
     rooms/PrivateRoom.cpp \
-    rooms/Run4Referee.cpp \
-    rooms/Run4RefereeLaizi.cpp \
     rooms/RunFast4Room.cpp \
     rooms/RunFast4RoomLaizi.cpp \
     rooms/RunFastRoom.cpp \
-    rooms/RunReferee.cpp \
     rooms/GameRoom.cpp \
     rooms/GameRoomBase.cpp \
-    rooms/RoomBase.cpp \
-    game/game_obj.cpp \
-    game/playermgr.cpp \
-    game/playerinterface.cpp \
+    rooms/RoomBase.cpp \ 
     db/DataAdapter.cpp \
     db/DataLayer.cpp \
     db/membercommongame.pb.cc \
@@ -53,18 +49,21 @@ SOURCES += main.cpp \
     src/Table.cpp \
     src/TimerHelper.cpp \
     src/DataCenter.cpp \
-    src/RunFastTracer.cpp
+    src/RunFastTracer.cpp \
+    algorithm/Run4Referee.cpp \
+    algorithm/Run4RefereeLaizi.cpp \
+    algorithm/RunReferee.cpp \
+    frame/game_obj.cpp
 
 HEADERS += \
-    src/ConfigMgr.h \
-    game/RunFastGameMgr.h \
-    game/MatchProxy.h \
-    game/PlayerBase.h \
-    game/PlayerRoomManager.h \
-    game/RoomListener.h \
-    game/RunFastGameMgr.h \
-    game/RunFastRobot.h \
-    game/RunFastRoomMgr.h \
+    frame/RunFastGameMgr.h \
+    frame/MatchProxy.h \
+    frame/PlayerBase.h \
+    frame/PlayerRoomManager.h \
+    frame/RoomListener.h \
+    frame/RunFastGameMgr.h \
+    frame/RunFastRobot.h \
+    frame/RunFastRoomMgr.h \
     datacenter/datemanager.h \
     datacenter/DBThreadPool.hpp \
     datacenter/httpclient.h \
@@ -107,23 +106,19 @@ HEADERS += \
     3rdpart/rapidjson/error/en.h \
     3rdpart/rapidjson/error/error.h \
     game/RunFastRoomMgr.h \
-    src/xPoker.h \
+    game/game_obj.h \
+    game/playermgr.h \
+    game/playerinterface.h \
     game/Player.h \
     game/RunFastRobotMgr.h \
     rooms/PrivateRoom.h \
-    rooms/Run4Referee.h \
-    rooms/Run4RefereeLaizi.h \
     rooms/RunFast4Room.h \
     rooms/RunFast4RoomLaizi.h \
     rooms/RunFastRoom.h \
-    rooms/RunReferee.h \
     rooms/GameRoom.h \
     rooms/GameRoomBase.h \
     rooms/RoomBase.h \
     rooms/RoomInterface.h \
-    game/game_obj.h \
-    game/playermgr.h \
-    game/playerinterface.h \
     db/DataAdapter.h \
     db/DataLayer.h \
     db/membercommongame.pb.h \
@@ -133,7 +128,6 @@ HEADERS += \
     poker/card_base.h \
     poker/card_generator.h \
     poker/card_interface.h \
-    poker/majiang_card.h \
     poker/poker_card.h \
     poker/referee.h \
     src/ConfigMgr.h \
@@ -152,7 +146,11 @@ HEADERS += \
     src/version.h \
     src/xPoker.h \
     src/DataCenter.h \
-    src/RunFastTracer.h
+    src/RunFastTracer.h \
+    algorithm/Run4Referee.h \
+    algorithm/Run4RefereeLaizi.h \
+    algorithm/RunReferee.h \
+    frame/game_obj.h
 
 INCLUDEPATH += C:/Users/ysx/Desktop \
     E:/code/rfworkspace \

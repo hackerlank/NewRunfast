@@ -37,7 +37,6 @@ public:
     void OnChangeRoom(PlayerInterface * player);
     void OnFindRoom(PlayerInterface * player);
     void OnCreateRoom(PlayerInterface * player, assistx2::Stream * packet);
-    void OnDisbandRoom(PlayerInterface * player, assistx2::Stream * packet);
     std::int32_t OnLeaveRoom(PlayerInterface * player, std::int32_t err);
     std::int32_t OnEnterRoom(PlayerInterface * player, assistx2::Stream * packet);
     void EnterNextRoom(PlayerInterface * player,std::int32_t id,std::string type);
@@ -50,7 +49,8 @@ private:
     std::vector<RoomEventListener * > room_listeners_;
     std::queue<RoomInterface *> match_rooms_;
     std::map<std::string, std::vector<RoomInterface * > > waiting_glod_room_groups_;
-    std::unique_ptr<GameObj> obj_;
+    std::unique_ptr<GameObj> guard_;
+    std::unique_ptr< assistx2::TcpHanlderWrapper > connect_;
 };
 
 #endif

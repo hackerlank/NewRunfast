@@ -200,23 +200,11 @@ std::int32_t RunFastGameMgr::OnMessage(assistx2::TcpHandler * socket, boost::sha
         DLOG(INFO) << "RunFastGameMgr::OnMessage() mid:=" << uid << " cmd:=" << cmd;
         return 0;
     }
-    else if (player->GetMatchProxy())
-    {
-        return player->GetMatchProxy()->OnMessage(player, packet);
-    }
 
-    switch(cmd)
-    {
-    case ENTER_TO_MATCH_SERVER:
-        player->SetMatchProxy(match_proxy_);
-        break;
-    case RunFast::CLIENT_ENTER_MATCH_HALL:
-        OnEnterMatchHall(player, packet);
-        break;
-    default:
-        roommgr_->OnMessage(&packet, player);
-        playermgr_->OnMessage(uid, packet);
-    }
+    match_proxy_->OnMessage(player, packet);
+    roommgr_->OnMessage(&packet, player);
+    playermgr_->OnMessage(uid, packet);
+
     std::stringstream ss;
     ss << "RunFastGameMgr::OnMessage:-->" << cmd;
     assistx2::TimeTracer tracerline(new assistx2::SimpleDumpHelper((ss.str()), assistx2::TimeTracer::SECOND));
@@ -494,30 +482,7 @@ void RunFastGameMgr::OnRobotTimer()
     GlobalTimerProxy::getInstance()->NewTimer(std::bind(&RunFastGameMgr::OnRobotTimer, this), 3);
 }
 
-void RunFastGameMgr::OnEnterMatchHall(PlayerInterface *player, const assistx2::Stream &packet)
-{
-    if (player->GetRoomObject() != nullptr)
-    {
-        assistx2::Stream stream(RunFast::SERVER_ENTER_MATCH_HALL);
-        stream.Write(player->GetUID());
-        stream.Write(RunFast::ErrorCode::ERROR_ENTER_MATCH_HAS_ROOM);
-        stream.End();
 
-        obj_->gatewayconnector()->SendTo(stream.GetNativeStream());
-        return;
-    }
-
-    match_proxy_->OnMessage(player, packet);
-}
-
-void RunFastGameMgr::OnLeaveMatchHall(PlayerInterface *player)
-{
-    if (player->GetMatchProxy() == nullptr &&
-        player->GetLoginStatus() == false)
-    {
-        playermgr_->RemovePlayer(player);
-    }
-}
 
 void RunFastGameMgr::OnRouteMessage(assistx2::Stream * packet)
 {

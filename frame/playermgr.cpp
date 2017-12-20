@@ -38,6 +38,9 @@ int32_t PlayerMgr::OnMessage(assistx2::Stream &packet, PlayerInterface* player)
     case RunFast::SERVER_BROADCAST_ACCOUNTS_EX:
         RunFastTracer::getInstance()->RemoveRoomMessage(player->GetUID(), cmd);
         break;
+    case Texas::GATEWAY_EVENT_CONNECT_CLOSE:
+        player->SetLoginStatus(false);
+        break;
     default:
          player->OnMessage(packet);
         break;
