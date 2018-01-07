@@ -4,21 +4,21 @@
 #include "datemanager.h"
 #include "ThreadPool.hpp"
 #include "DBThreadPool.hpp"
-#include "PrivateRoom.h"
-#include "Table.h"
+#include "private_room.h"
+#include "table.h"
 #include "httpclient.h"
-#include "ConfigMgr.h"
+#include "config_mgr.h"
 #include <iostream>
 #include <chrono>
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
-#include "TimerHelper.h"
+#include "timer_helper.h"
 #include "memberfides.pb.h"
 #include <assistx2/configure.h>
-#include "playerinterface.h"
-#include "xPoker.h"
-#include "DataLayer.h"
+#include "player_interface.h"
+#include "xpoker.h"
+#include "data_layer.h"
 #include <boost/format.hpp>
 
 //春天=1，炸弹=2

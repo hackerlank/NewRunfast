@@ -1,4 +1,4 @@
-#ifndef _XPDKPOKER_POKER_CARD_INTERFACE_H_
+ï»¿#ifndef _XPDKPOKER_POKER_CARD_INTERFACE_H_
 #define _XPDKPOKER_POKER_CARD_INTERFACE_H_
 
 #include <vector>
@@ -35,11 +35,11 @@ public:
 	enum Suit
 	{
 		FirstSuit		= 1,					
-		Diamonds	=1,					//·½¿é
-		Clubs,									//Ã·»¨
-		Hearts,								//ºìÌÒ
-		Spades,								//ºÚÌÒ
-        NONESUIT ,					//Ã»ÓĞ»¨É«£¬²»Çø·Ö»¨É«
+		Diamonds	=1,					//æ–¹å—
+		Clubs,									//æ¢…èŠ±
+		Hearts,								//çº¢æ¡ƒ
+		Spades,								//é»‘æ¡ƒ
+        NONESUIT ,					//æ²¡æœ‰èŠ±è‰²ï¼Œä¸åŒºåˆ†èŠ±è‰²
 		LastSuit		= NONESUIT
 	} ;
 
@@ -56,7 +56,7 @@ public:
 	virtual void setChangeName(const std::string&) = 0;
 	virtual std::string getChangeName() const = 0;
 
-	// == ·µ»Ø 0£¬ Ğ¡ÓÚ·µ»Ø -1£¬ ´óÓÚ·µ»Ø 1
+	// == è¿”å› 0ï¼Œ å°äºè¿”å› -1ï¼Œ å¤§äºè¿”å› 1
 	virtual int Compare(const CardInterface & ) = 0;
 };
 

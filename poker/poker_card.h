@@ -1,4 +1,4 @@
-#ifndef _XPDKPOKER_POKER_POKER_CARD_H_
+﻿#ifndef _XPDKPOKER_POKER_POKER_CARD_H_
 #define _XPDKPOKER_POKER_POKER_CARD_H_
 
 #include "card_base.h"

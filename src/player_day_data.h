@@ -1,9 +1,9 @@
 #ifndef _XNNPOKER_SRC_PLAYER_TODAY_DATA_H_
 #define _XNNPOKER_SRC_PLAYER_TODAY_DATA_H_
 
-#include "xPoker.h"
+#include "xpoker.h"
 
-//Íæ¼ÒµÄÃ¿ÈÕÊı¾İ
+//ç©å®¶çš„æ¯æ—¥æ•°æ®
 class PlayerDayData
 {
 public:
@@ -39,22 +39,22 @@ private:
 
 	void Clear();
 
-	//µ±ÌìÅÆ¾Ö¼ÇÊı
+	//å½“å¤©ç‰Œå±€è®°æ•°
 	int round_count_;
 
-	//½ğ±Ò±Òµ±ÌìÔùËÍ´ÎÊı
+	//é‡‘å¸å¸å½“å¤©èµ é€æ¬¡æ•°
 	int gold_gift_count_;
 
-	//¼ÇÂ¼Ê±¼ä
+	//è®°å½•æ—¶é—´
 	int yday_;
 
-	//µ±Ìì×î¸ßÓ®È¡³ïÂëÊı
+	//å½“å¤©æœ€é«˜èµ¢å–ç­¹ç æ•°
 	chips_type max_win_chips_;
 
-	//µ±Ìì½ğ±ÒÔöÁ¿
+	//å½“å¤©é‡‘å¸å¢é‡
 	chips_type gold_incr_;
 
-	//ÔÚÍæÊ±¼ä
+	//åœ¨ç©æ—¶é—´
 	time_t playtime_;
 };
 

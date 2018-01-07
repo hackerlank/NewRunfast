@@ -1,4 +1,4 @@
-#include "card_interface.h"
+﻿#include "card_interface.h"
 
 bool ComparePoker( const std::shared_ptr<CardInterface > & left, const std::shared_ptr<CardInterface > & right )
 {

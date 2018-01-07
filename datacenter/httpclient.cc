@@ -1,4 +1,4 @@
-#define GLOG_NO_ABBREVIATED_SEVERITIES
+ï»¿#define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <glog/logging.h>
 #include "httpclient.h"
 #include <curl/curl.h>
@@ -16,7 +16,7 @@ public:
 HttpClient::HttpClient():
    pImpl_(new HttpClientImpl)
 {
-    //¶àÏß³Ìµ÷ÓÃÊ± ĞèÔÚÖ÷Ïß³Ìµ÷ÓÃcurl_global_init³õÊ¼»¯
+    //å¤šçº¿ç¨‹è°ƒç”¨æ—¶ éœ€åœ¨ä¸»çº¿ç¨‹è°ƒç”¨curl_global_initåˆå§‹åŒ–
     curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
@@ -123,8 +123,8 @@ std::int32_t HttpClient::Get(const std::string& url, ResponseCallback callback)
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, OnWriteData);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)pImpl_.get());
     /**
-    * µ±¶à¸öÏß³Ì¶¼Ê¹ÓÃ³¬Ê±´¦ÀíµÄÊ±ºò£¬Í¬Ê±Ö÷Ïß³ÌÖĞÓĞsleep»òÊÇwaitµÈ²Ù×÷¡£
-    * Èç¹û²»ÉèÖÃÕâ¸öÑ¡Ïî£¬libcurl½«»á·¢ĞÅºÅ´ò¶ÏÕâ¸öwait´Ó¶øµ¼ÖÂ³ÌĞòÍË³ö¡£
+    * å½“å¤šä¸ªçº¿ç¨‹éƒ½ä½¿ç”¨è¶…æ—¶å¤„ç†çš„æ—¶å€™ï¼ŒåŒæ—¶ä¸»çº¿ç¨‹ä¸­æœ‰sleepæˆ–æ˜¯waitç­‰æ“ä½œã€‚
+    * å¦‚æœä¸è®¾ç½®è¿™ä¸ªé€‰é¡¹ï¼Œlibcurlå°†ä¼šå‘ä¿¡å·æ‰“æ–­è¿™ä¸ªwaitä»è€Œå¯¼è‡´ç¨‹åºé€€å‡ºã€‚
     */
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 3);
@@ -158,7 +158,7 @@ std::int32_t HttpClient::Posts(const std::string& url, const std::string& post, 
     }
     else
     {
-        //È±Ê¡Çé¿ö¾ÍÊÇPEM£¬ËùÒÔÎŞĞèÉèÖÃ£¬ÁíÍâÖ§³ÖDER  
+        //ç¼ºçœæƒ…å†µå°±æ˜¯PEMï¼Œæ‰€ä»¥æ— éœ€è®¾ç½®ï¼Œå¦å¤–æ”¯æŒDER  
         //curl_easy_setopt(curl,CURLOPT_SSLCERTTYPE,"PEM");  
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, true);
         curl_easy_setopt(curl, CURLOPT_CAINFO, capath.c_str());

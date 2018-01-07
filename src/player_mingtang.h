@@ -3,12 +3,12 @@
 
 struct PlayerMingTang
 {
-    std::uint32_t spring_times = 0;           //´ºÌì´ÎÊý
+    std::uint32_t spring_times = 0;           //æ˜¥å¤©æ¬¡æ•°
 
-    std::uint32_t bomb_times = 0;         //Õ¨µ¯×Ü´ÎÊý
-    std::uint32_t bomb_times_one = 0;     //1¸öÕ¨µ¯µÄ´ÎÊý£»
-    std::uint32_t bomb_times_two = 0;     //2¸öÕ¨µ¯µÄ´ÎÊý£»
-    std::uint32_t bomb_times_n = 0;       //2¸öÒÔÉÏÕ¨µ¯´ÎÊý£»
+    std::uint32_t bomb_times = 0;         //ç‚¸å¼¹æ€»æ¬¡æ•°
+    std::uint32_t bomb_times_one = 0;     //1ä¸ªç‚¸å¼¹çš„æ¬¡æ•°ï¼›
+    std::uint32_t bomb_times_two = 0;     //2ä¸ªç‚¸å¼¹çš„æ¬¡æ•°ï¼›
+    std::uint32_t bomb_times_n = 0;       //2ä¸ªä»¥ä¸Šç‚¸å¼¹æ¬¡æ•°ï¼›
 };
 
 #endif // PLAYER_MINGTANG_H

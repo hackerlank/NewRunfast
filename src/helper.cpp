@@ -3,7 +3,7 @@
 #define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <glog/logging.h>
 
-#include "Table.h"
+#include "table.h"
 #include "card_interface.h"
 #include "player_interface.h"
 

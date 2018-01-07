@@ -5,7 +5,7 @@
 #include<memory>
 #include <atomic>
 #include "SyncQueue.hpp"
-#include "ConfigMgr.h"
+#include "config_mgr.h"
 #include <assistx2/database.h>
 #include <assistx2/time_tracer.h>
 

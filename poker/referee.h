@@ -16,11 +16,11 @@ enum Ranking
   NIN_Seven,
   NIN_Eight,
   NIN_Nine,
-  NIN_Nin,						//Å£Å£
-  NIN_WHITE,					//°×Æ¤Å£ //white
-  NIN_BOMB,					//ËÄÌõ
-  NIN_FULL,						//ÂúÅ£, Îå»¨Å£
-  NIN_SMALL					//ÎåĞ¡Å£
+  NIN_Nin,						//ç‰›ç‰›
+  NIN_WHITE,					//ç™½çš®ç‰› //white
+  NIN_BOMB,					//å››æ¡
+  NIN_FULL,						//æ»¡ç‰›, äº”èŠ±ç‰›
+  NIN_SMALL					//äº”å°ç‰›
 };
 
 class HandStrength
@@ -74,7 +74,7 @@ public:
 
   virtual bool getStrength(const Cards & holdcards, const Cards & commcards, HandStrength & strength) const = 0;
 
-  // 0 , µÈÓÚ£¬ -1£¬ Ğ¡ÓÚ£¬ 1 ´óÓÚ
+  // 0 , ç­‰äºï¼Œ -1ï¼Œ å°äºï¼Œ 1 å¤§äº
   virtual int Compare(const HandStrength & left, const HandStrength & right) const = 0;
 };
 

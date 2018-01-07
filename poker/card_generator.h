@@ -1,4 +1,4 @@
-#ifndef _XPDKPOKER_CARD_GENERATOR_H_
+﻿#ifndef _XPDKPOKER_CARD_GENERATOR_H_
 #define _XPDKPOKER_CARD_GENERATOR_H_
 
 #include "card_interface.h"

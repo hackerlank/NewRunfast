@@ -1,4 +1,4 @@
-#ifndef _XPDKPOKER_POKER_CARDBASE_H_
+Ôªø#ifndef _XPDKPOKER_POKER_CARDBASE_H_
 #define _XPDKPOKER_POKER_CARDBASE_H_
 
 #include "card_interface.h"
@@ -27,8 +27,8 @@ public:
 	std::string getChangeName() const {};
 
 private:
-	Face face_;//¥Û–°
-	Suit  suit_;//ª®…´
+	Face face_;//Â§ßÂ∞è
+	Suit  suit_;//Ëä±Ëâ≤
 
 protected:
 	std::string name_;

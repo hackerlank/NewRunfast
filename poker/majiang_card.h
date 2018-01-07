@@ -17,7 +17,7 @@ public:
 
 	virtual std::string getName() const;
 
-	// == ·µ»Ø 0£¬ Ğ¡ÓÚ·µ»Ø -1£¬ ´óÓÚ·µ»Ø 1
+	// == è¿”å› 0ï¼Œ å°äºè¿”å› -1ï¼Œ å¤§äºè¿”å› 1
 	virtual int Compare(const CardInterface & card);
 };
 

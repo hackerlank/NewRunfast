@@ -1,4 +1,4 @@
-#include "card_base.h"
+﻿#include "card_base.h"
 
 
 CardBase::CardBase(void)

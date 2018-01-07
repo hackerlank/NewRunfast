@@ -1,30 +1,30 @@
-#include "referee.h"
+﻿#include "referee.h"
 
 #define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <glog/logging.h>
 
 #include <algorithm>
 
-#include "xPoker.h"
+#include "xpoker.h"
 
 
 std::string g_aRankingDesc[15] =
 {
-	"ûţ",//NIN_None,
-	"ţ��",//NIN_Ace,
-	"ţ��",//NIN_Two,
-	"ţ��",//NIN_Three,
-	"ţ��",//NIN_Four,
-	"ţ��",//NIN_Five,
-	"ţ��",//NIN_Six,
-	"ţ��",//NIN_Seven,
-	"ţ��",//NIN_Eight,
-	"ţ��",//NIN_Nine,
-	"ţţ",//NIN_Nin,						//ţţ
-	"��Ƥţ",//NIN_WHITE,					//��Ƥţ //white
-	"��ը",//NIN_BOMB,					//����
-	"�廨ţ",//NIN_FULL,						//��ţ, �廨ţ
-	"��Сţ",//NIN_SMALL					//��Сţ
+    "没牛",//NIN_None,
+    "牛丁",//NIN_Ace,
+    "牛二",//NIN_Two,
+    "牛三",//NIN_Three,
+    "牛四",//NIN_Four,
+    "牛五",//NIN_Five,
+    "牛六",//NIN_Six,
+    "牛七",//NIN_Seven,
+    "牛八",//NIN_Eight,
+    "牛九",//NIN_Nine,
+    "牛牛",//NIN_Nin,						//牛牛
+    "白皮牛",//NIN_WHITE,					//白皮牛 //white
+    "四炸",//NIN_BOMB,					//四条
+    "五花牛",//NIN_FULL,						//满牛, 五花牛
+    "五小牛",//NIN_SMALL					//五小牛
 };
 
 class PokerStyleGameLogicImpl : public Referee

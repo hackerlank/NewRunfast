@@ -1,4 +1,4 @@
-#include "card_generator.h"
+ï»¿#include "card_generator.h"
 #include <algorithm>
 
 //#define TEST_CARD
@@ -80,14 +80,14 @@ void CardGenerator::MakeCards_One(std::int32_t type)
         {
             if (type == 16 || type == 15)
             {
-                //È¥µôºÚÌÒA
+                //å»æ‰é»‘æ¡ƒA
                 if (CardInterface::Ace == f &&
                     CardInterface::Spades == s
                     )
                 {
                     continue;
                 }
-                //Ö»±£ÁôºìÌÒ2
+                //åªä¿ç•™çº¢æ¡ƒ2
                 if (CardInterface::Two == f &&
                     CardInterface::Hearts != s
                     )
@@ -98,14 +98,14 @@ void CardGenerator::MakeCards_One(std::int32_t type)
 
             if (type == 15)
             {
-                //È¥µôºÚÌÒA
+                //å»æ‰é»‘æ¡ƒA
                 if (CardInterface::King == f &&
                     CardInterface::Spades == s
                     )
                 {
                     continue;
                 }
-                //Ö»±£ÁôºìÌÒA
+                //åªä¿ç•™çº¢æ¡ƒA
                 if (CardInterface::Ace == f &&
                     CardInterface::Hearts != s
                     )

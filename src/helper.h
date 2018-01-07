@@ -6,7 +6,7 @@
 
 #include <boost/noncopyable.hpp>
 
-#include "xPoker.h"
+#include "xpoker.h"
 
 #include "card_interface.h"
 
@@ -16,7 +16,7 @@
 
 class Seat;
 
-//Æ¥ÅäÒ»¸ö²ÎÓëÁËÓÎÏ·µÄ²¢ÇÒÎ´ÆúÅÆµÄÍæ¼Ò
+//åŒ¹é…ä¸€ä¸ªå‚ä¸äº†æ¸¸æˆçš„å¹¶ä¸”æœªå¼ƒç‰Œçš„ç©å®¶
 bool IsLivePlayer(const std::string room_type, Seat * seat);
 
 bool IsNullSeat(Seat * seat);
