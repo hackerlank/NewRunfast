@@ -1,6 +1,4 @@
-
-CC  	 := gcc
-CXX  	 := g++
+#
 CC       := gcc 
 CXX      := g++ 
 LD       := g++ 
@@ -36,10 +34,10 @@ endif
 BIN_DIR		:= bin
 BIN         := ${BIN_DIR}/pdk_poker
 BUILD_DIR	:= obj
-INCPATH  	:= -I/usr/include/mysql -I/home/centos7/include -I/usr/local/assistx2/include
+INCPATH  	:= -I/usr/include/mysql -I/home/centos7/code.git/include -I/usr/local/assistx2/include
 INCPATH		:= ${INCPATH} -I./poker -I./src -I./db -I./algorithm -I./frame -I./game_data -I./scenes -I./scenes/rooms -I./timer -I./3rdpart -I./datacenter
 
-LINKPATH  	:= -L/usr/lib64/ -L/usr/lib64/mysql -L/usr/local/lib/boost -L/usr/local/libmemcached/lib -L/usr/local/assistx2/lib -L/home/centos7/lib 
+LINKPATH  	:= -L/usr/lib64/ -L/usr/lib64/mysql -L/usr/local/lib/boost -L/usr/local/libmemcached/lib -L/usr/local/assistx2/lib -L/home/centos7/code.git/lib 
 
 LIBS   		:= -Wl,-dn -lassistx2_core -lassistx2_db -lassistx2_json -lassistx2_cache -Wl,-dy
 LIBS 		:= ${LIBS} -lgflags -lglog -lprotobuf -lcpp_redis -ltinyxml -lboost_thread -lboost_system -lboost_date_time -lsnappy 
@@ -50,9 +48,10 @@ exclude_dirs := .git obj
 
 #递归遍历3级子目录
 DIRS := $(shell find . -maxdepth 3 -type d)
-DIRS := $(basename $(patsubst ./%, %, ${DIRS}))
-SRCPATH := $(basename $(patsubst :%, %, ${DIRS}))
 DIRS := $(filter-out ${exclude_dirs}, ${DIRS})
+DIRS := $(basename $(patsubst ./%, %, ${DIRS}))
+DIRS := ${DIRS} ${PWD}
+SRCPATH := $(basename $(patsubst :%, %, ${DIRS}))
 
 CPP_SRCS := $(foreach dir,${DIRS}, $(wildcard ${dir}/*.cpp))
 CC_SRCS := $(foreach dir,${DIRS}, $(wildcard ${dir}/*.cc))
@@ -89,4 +88,4 @@ _PRE:
 	
 .PHONY: clean
 clean:
-	rm -rf ${OBJS} ${BUILD_DIR} ${BIN} 
+	rm -rf ${OBJS} ${BUILD_DIR} ${BIN_DIR} ${BIN} 

@@ -8,10 +8,10 @@
 
 #include <assistx2/platform_wrapper.h>
 
-#include "ConfigMgr.h"
-#include "RunFastGameMgr.h"
+#include "config_mgr.h"
+#include "runfast_game_mgr.h"
 #include "helper.h"
-#include "DataLayer.h"
+#include "data_layer.h"
 #include "version.h"
 #include "datemanager.h"
 
@@ -115,7 +115,7 @@ int main(int argc,  char ** argv)
     pid << assistx2::os::GetCurrentDirectory(path, 511) << " " << assistx2::os::getpid();
     pid.close();
 
-    RunFastGameMgr mgr(ios);
+    RunFastGameMgr mgr;
     mgr.Initialize();
 
     DataManager::getInstance()->Init();

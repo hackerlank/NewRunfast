@@ -1,76 +1,78 @@
 TEMPLATE = app
 CONFIG += c++11
-CONFIG -= app_bundle
 CONFIG -= qt
+DEFINES += _XPOKER_TEST_ _ENDABLE_TIME_TRACER_ TIXML_USE_STL
 
-SOURCES += main.cpp \
-    src/ConfigMgr.cpp \
-    game/RunFastGameMgr.cpp \
-    game/MatchProxy.cpp \
-    game/PlayerBase.cpp \
-    game/PlayerRoomManager.cpp \
-    game/RunFastGameMgr.cpp \
-    game/RunFastRobot.cpp \
-    game/RunFastRoomMgr.cpp \
+SOURCES += \
+    3rdpart/base64/base64.cc \
+    algorithm/run4_referee.cpp \
+    algorithm/run4_referee_laizi.cpp \
+    algorithm/run_referee.cpp \
     datacenter/datemanager.cc \
     datacenter/httpclient.cc \
-    3rdpart/base64/base64.cc \
-    game/RunFastRoomMgr.cpp \
-    game/Player.cpp \
-    game/RunFastRobotMgr.cpp \
-    rooms/PrivateRoom.cpp \
-    rooms/Run4Referee.cpp \
-    rooms/Run4RefereeLaizi.cpp \
-    rooms/RunFast4Room.cpp \
-    rooms/RunFast4RoomLaizi.cpp \
-    rooms/RunFastRoom.cpp \
-    rooms/RunReferee.cpp \
-    rooms/GameRoom.cpp \
-    rooms/GameRoomBase.cpp \
-    rooms/RoomBase.cpp \
-    game/game_obj.cpp \
-    game/playermgr.cpp \
-    game/playerinterface.cpp \
-    db/DataAdapter.cpp \
-    db/DataLayer.cpp \
+    db/data_adapter.cpp \
+    db/data_layer.cpp \
     db/membercommongame.pb.cc \
     db/memberfides.pb.cc \
     db/membergame.pb.cc \
+    frame/match_proxy.cpp \
+    frame/player.cpp \
+    frame/player_base.cpp \
+    frame/player_interface.cpp \
+    frame/player_mgr.cpp \
+    frame/player_room_manager.cpp \
+    frame/runfast_game_mgr.cpp \
+    frame/runfast_robot.cpp \
+    frame/runfast_robot_mgr.cpp \
+    frame/runfast_room_mgr.cpp \
+    game_data/data_center.cpp \
+    game_data/data_def.cpp \
+    game_data/data_layer.cpp \
+    game_data/runfast_tracer.cpp \
     poker/card_base.cpp \
     poker/card_generator.cpp \
     poker/card_interface.cpp \
     poker/majiang_card.cpp \
     poker/poker_card.cpp \
     poker/referee.cpp \
-    src/ConfigMgr.cpp \
-    src/DataDef.cpp \
-    src/DataLayer.cpp \
+    scenes/rooms/game_room.cpp \
+    scenes/rooms/game_room_base.cpp \
+    scenes/rooms/private_room.cpp \
+    scenes/rooms/room_base.cpp \
+    scenes/rooms/runfast4_room.cpp \
+    scenes/rooms/runfast4_room_laizi.cpp \
+    scenes/rooms/runfast_room.cpp \
+    scenes/seat_impl.cpp \
+    scenes/table.cpp \
+    src/config_mgr.cpp \
     src/helper.cpp \
     src/player_day_data.cpp \
-    src/RoomTimer.cpp \
-    src/SeatImpl.cpp \
-    src/SimpleTimer.cpp \
-    src/Table.cpp \
-    src/TimerHelper.cpp \
-    src/DataCenter.cpp \
-    src/RunFastTracer.cpp
+    timer/room_timer.cpp \
+    timer/simple_timer.cpp \
+    timer/timer_helper.cpp \
+    main.cpp \
+    game_data/game_data_mgr.cpp \
+    frame/handle_obj.cpp \
+    algorithm/play_logic.cpp
 
 HEADERS += \
-    src/ConfigMgr.h \
-    game/RunFastGameMgr.h \
-    game/MatchProxy.h \
-    game/PlayerBase.h \
-    game/PlayerRoomManager.h \
-    game/RoomListener.h \
-    game/RunFastGameMgr.h \
-    game/RunFastRobot.h \
-    game/RunFastRoomMgr.h \
-    datacenter/datemanager.h \
-    datacenter/DBThreadPool.hpp \
-    datacenter/httpclient.h \
-    datacenter/SyncQueue.hpp \
-    datacenter/ThreadPool.hpp \
     3rdpart/base64/base64.h \
+    3rdpart/rapidjson/error/en.h \
+    3rdpart/rapidjson/error/error.h \
+    3rdpart/rapidjson/internal/biginteger.h \
+    3rdpart/rapidjson/internal/diyfp.h \
+    3rdpart/rapidjson/internal/dtoa.h \
+    3rdpart/rapidjson/internal/ieee754.h \
+    3rdpart/rapidjson/internal/itoa.h \
+    3rdpart/rapidjson/internal/meta.h \
+    3rdpart/rapidjson/internal/pow10.h \
+    3rdpart/rapidjson/internal/regex.h \
+    3rdpart/rapidjson/internal/stack.h \
+    3rdpart/rapidjson/internal/strfunc.h \
+    3rdpart/rapidjson/internal/strtod.h \
+    3rdpart/rapidjson/internal/swap.h \
+    3rdpart/rapidjson/msinttypes/inttypes.h \
+    3rdpart/rapidjson/msinttypes/stdint.h \
     3rdpart/rapidjson/allocators.h \
     3rdpart/rapidjson/document.h \
     3rdpart/rapidjson/encodedstream.h \
@@ -90,79 +92,79 @@ HEADERS += \
     3rdpart/rapidjson/stream.h \
     3rdpart/rapidjson/stringbuffer.h \
     3rdpart/rapidjson/writer.h \
-    3rdpart/rapidjson/msinttypes/inttypes.h \
-    3rdpart/rapidjson/msinttypes/stdint.h \
-    3rdpart/rapidjson/internal/biginteger.h \
-    3rdpart/rapidjson/internal/diyfp.h \
-    3rdpart/rapidjson/internal/dtoa.h \
-    3rdpart/rapidjson/internal/ieee754.h \
-    3rdpart/rapidjson/internal/itoa.h \
-    3rdpart/rapidjson/internal/meta.h \
-    3rdpart/rapidjson/internal/pow10.h \
-    3rdpart/rapidjson/internal/regex.h \
-    3rdpart/rapidjson/internal/stack.h \
-    3rdpart/rapidjson/internal/strfunc.h \
-    3rdpart/rapidjson/internal/strtod.h \
-    3rdpart/rapidjson/internal/swap.h \
-    3rdpart/rapidjson/error/en.h \
-    3rdpart/rapidjson/error/error.h \
-    game/RunFastRoomMgr.h \
-    src/xPoker.h \
-    game/Player.h \
-    game/RunFastRobotMgr.h \
-    rooms/PrivateRoom.h \
-    rooms/Run4Referee.h \
-    rooms/Run4RefereeLaizi.h \
-    rooms/RunFast4Room.h \
-    rooms/RunFast4RoomLaizi.h \
-    rooms/RunFastRoom.h \
-    rooms/RunReferee.h \
-    rooms/GameRoom.h \
-    rooms/GameRoomBase.h \
-    rooms/RoomBase.h \
-    rooms/RoomInterface.h \
-    game/game_obj.h \
-    game/playermgr.h \
-    game/playerinterface.h \
-    db/DataAdapter.h \
-    db/DataLayer.h \
+    algorithm/run4_referee.h \
+    algorithm/run4_referee_laizi.h \
+    algorithm/run_referee.h \
+    datacenter/datemanager.h \
+    datacenter/DBThreadPool.hpp \
+    datacenter/httpclient.h \
+    datacenter/SyncQueue.hpp \
+    datacenter/ThreadPool.hpp \
+    db/data_adapter.h \
+    db/data_layer.h \
     db/membercommongame.pb.h \
     db/memberfides.pb.h \
     db/membergame.pb.h \
-    db/Protocol.h \
+    db/protocol.h \
+    frame/match_proxy.h \
+    frame/player.h \
+    frame/player_base.h \
+    frame/player_interface.h \
+    frame/player_mgr.h \
+    frame/player_room_manager.h \
+    frame/room_listener.h \
+    frame/runfast_game_mgr.h \
+    frame/runfast_robot.h \
+    frame/runfast_robot_mgr.h \
+    frame/runfast_room_mgr.h \
+    game_data/data_center.h \
+    game_data/data_def.h \
+    game_data/data_layer.h \
+    game_data/runfast_tracer.h \
     poker/card_base.h \
     poker/card_generator.h \
     poker/card_interface.h \
     poker/majiang_card.h \
     poker/poker_card.h \
     poker/referee.h \
-    src/ConfigMgr.h \
-    src/DataDef.h \
-    src/DataLayer.h \
+    scenes/rooms/game_room.h \
+    scenes/rooms/game_room_base.h \
+    scenes/rooms/private_room.h \
+    scenes/rooms/room_base.h \
+    scenes/rooms/room_interface.h \
+    scenes/rooms/runfast4_room.h \
+    scenes/rooms/runfast4_room_laizi.h \
+    scenes/rooms/runfast_room.h \
+    scenes/seat_impl.h \
+    scenes/table.h \
+    src/config_mgr.h \
     src/helper.h \
     src/player_day_data.h \
     src/player_mingtang.h \
-    src/PokerCmd.h \
-    src/ProxyCmd.h \
-    src/RoomTimer.h \
-    src/SeatImpl.h \
-    src/SimpleTimer.h \
-    src/Table.h \
-    src/TimerHelper.h \
+    src/poker_cmd.h \
+    src/proxy_cmd.h \
     src/version.h \
-    src/xPoker.h \
-    src/DataCenter.h \
-    src/RunFastTracer.h
+    src/xpoker.h \
+    timer/room_timer.h \
+    timer/simple_timer.h \
+    timer/timer_helper.h \
+    game_data/game_data_mgr.h \
+    frame/handle_obj.h \
+    algorithm/play_logic.h
 
-INCLUDEPATH += C:/Users/ysx/Desktop \
-    E:/code/rfworkspace \
-    ./src \
-    ./game \
-    ./poker \
-    ./db \
-    ./datacenter \
-    ./3rdpart \
-    ./plugin \
-    ./rooms
+INCLUDEPATH += \
+    3rdpart \
+    algorithm \
+    datacenter \
+    db \
+    frame \
+    game_data \
+    poker \
+    scenes \
+    scenes/rooms \
+    src \
+    timer \
+    /usr/include/mysql \
+    /home/centos7/code.git/include \
+    /usr/local/assistx2/include
 
-LIBS += C:/Users/ysx/Desktop \

@@ -48,96 +48,117 @@ RunFastGameMgr::~RunFastGameMgr(void)
 {
 }
 
-void RunFastGameMgr::Initialize()
+std::int32_t RunFastGameMgr::Initialize()
 {
     LOG(INFO) << "--------------------Initialize Start-----------------------";
-    boost::uuids::random_generator  generator;
+       boost::uuids::random_generator  generator;
 
-    std::stringstream ss;
-    ss << generator();
+       std::stringstream ss;
+       ss << generator();
 
-    run_id_ = ss.str();
-    LOG(INFO) << "RunFastGameMgr::Initialize()-> run_id_:=" << run_id_;
+       run_id_ = ss.str();
+       LOG(INFO) << "RunFastGameMgr::Initialize()-> run_id_:=" << run_id_;
 
-    GlobalTimerProxy::getInstance()->Init(service_);
-    g_server_id = ConfigMgr::getInstance()->GetSID();
+       GlobalTimerProxy::getInstance()->Init(*service_);
+       g_server_id = ConfigMgr::getInstance()->GetSID();
 
-    auto cfg_reader = ConfigMgr::getInstance()->GetAppCfg();
-    cfg_reader->getConfig("white_list", "enable_check", g_enable_ip_check);
+       auto cfg_reader = ConfigMgr::getInstance()->GetAppCfg();
+       cfg_reader->getConfig("white_list", "enable_check", g_enable_ip_check);
 
-    std::string white_list;
-    if (g_enable_ip_check != 0)
-    {
-        if (cfg_reader->getConfig("white_list", "host", white_list) == true)
-        {
-            std::vector<std::string> white_list_string;
-            assistx2::SplitString(white_list, ",", white_list_string);
-            for (auto it : white_list_string)
-            {
-                int temp;
-                temp = std::stoi(it);
-                g_ip_white_list.push_back(temp);
-            }
-        }
-    }
-    LOG(INFO) << "g_enable_ip_check:=" << g_enable_ip_check << ", white_list:=" << white_list;
+       std::string white_list;
+       if (g_enable_ip_check != 0)
+       {
+           if (cfg_reader->getConfig("white_list", "host", white_list) == true)
+           {
+               std::vector<std::string> white_list_string;
+               assistx2::SplitString(white_list, ",", white_list_string);
+               for (auto it : white_list_string)
+               {
+                   int temp;
+                   temp = std::stoi(it);
+                   g_ip_white_list.push_back(temp);
+               }
+           }
+       }
+       LOG(INFO) << "g_enable_ip_check:=" << g_enable_ip_check << ", white_list:=" << white_list;
 
+       std::string host;
+       std::string port;
+       cfg_reader->getConfig("xGateWay", "host", host);
+       cfg_reader->getConfig("xGateWay", "port", port);
 
-    if (RunFastTracer::getInstance()->Init(&gatewayconnector_) != 0)
-    {
-        LOG(ERROR) << ("Tracer INIT FAILED.");
-        exit(-1);
-    }
+//       DCHECK(gatewayconnector_ == nullptr);
+//       gatewayconnector_ = new assistx2::TcpHanlderWrapper(ios_);
+//       if (gatewayconnector_ == nullptr)
+//       {
+//           LOG(ERROR) << ("RunFastGameMgr::Initialize gatewayconnector_ is nullptr.");
+//           return -1;
+//       }
 
-    robot_mgr_ = new RunFastRobotMgr(service_, &gatewayconnector_);
-    if (robot_mgr_ == nullptr)
-    {
-        LOG(ERROR) << ("RobotMgr INIT FAILED.");
-        exit(-1);
-    }
+       if (RunFastTracer::getInstance()->Init(gatewayconnector_) != 0)
+       {
+           LOG(ERROR) << ("Tracer INIT FAILED.");
+           return -1;
+       }
 
-    //PlayerRoomManager::getInstance()->Init();
+       robot_mgr_ = new RunFastRobotMgr(*service_, gatewayconnector_);
+       if (robot_mgr_ == nullptr)
+       {
+           LOG(ERROR) << ("RobotMgr INIT FAILED.");
+           return -1;
+       }
 
-    robot_mgr_->Init();
+       //PlayerRoomManager::getInstance()->Init();
 
-    roommgr_->AddRoomListener(robot_mgr_);
+       robot_mgr_->Init();
 
-    roommgr_->Initialize(boost::bind(&RunFastRoomMgr::OnLeaveRoom, this, _1, _2));
+       roommgr_->AddRoomListener(robot_mgr_);
 
-    match_proxy_ = std::make_shared<MatchProxy>();
-    if (match_proxy_ != nullptr)
-    {
-        match_proxy_->SetLeaveCallBack(std::bind(&MatchProxy::OnLeaveMatchHall, this, std::placeholders::_1));
-    }
+//       roommgr_->Initialize(boost::bind(&RunFastGameMgr::OnLeaveRoom, this, _1));
 
-    std::string host;
-    std::string port;
-    cfg_reader->getConfig("xGateWay", "host", host);
-    cfg_reader->getConfig("xGateWay", "port", port);
-    gatewayconnector_.RegisterCloseHandler(boost::bind(&HandleObj::OnClose, this, _1, _2));
-    gatewayconnector_.RegisterConnectHandler(boost::bind(&HandleObj::OnConnect, this, _1, _2));
-    gatewayconnector_.RegisterMessageHandler(boost::bind(&HandleObj::OnMessage, this, _1, _2));
-    gatewayconnector_.Connect(host, static_cast<unsigned short>(assistx2::atoi_s(port)));
+       gatewayconnector_->RegisterCloseHandler(boost::bind(&RunFastGameMgr::OnClose, this, _1, _2));
+       gatewayconnector_->RegisterConnectHandler(boost::bind(&RunFastGameMgr::OnConnect, this, _1, _2));
+       gatewayconnector_->RegisterMessageHandler(boost::bind(&RunFastGameMgr::OnMessage, this, _1, _2));
+       gatewayconnector_->Connect(host, static_cast<unsigned short>(assistx2::atoi_s(port)));
 
+       {
+           std::string host;
+           std::string port;
+           ConfigMgr::getInstance()->GetAppCfg()->getConfig("Proxy", "host", host);
+           ConfigMgr::getInstance()->GetAppCfg()->getConfig("Proxy", "port", port);
 
-    std::string proxy_host;
-    std::string proxy_port;
-    ConfigMgr::getInstance()->GetAppCfg()->getConfig("Proxy", "host", proxy_host);
-    ConfigMgr::getInstance()->GetAppCfg()->getConfig("Proxy", "port", proxy_port);
-    if (!proxy_host.empty())
-    {
-        proxy_.RegisterCloseHandler(boost::bind(&HandleObj::OnProxyClose, this, _1));
-        proxy_.RegisterConnectHandler(boost::bind(&HandleObj::OnProxyConnect, this, _1));
-        proxy_.RegisterMessageHandler(boost::bind(&HandleObj::OnProxyMessage, this, _1, _2));
-        proxy_.Connect(host, assistx2::atoi_s(proxy_port));
-    }
-    LOG(INFO) << "Proxy host:=" << proxy_host << ", port:=" << proxy_port;
+           if (host.empty() == false)
+           {
+//               DCHECK(proxy_ == nullptr);
+//               proxy_ = new assistx2::TcpHanlderWrapper(ios_, assistx2::ParserType::STREAMEX_PARSER);
+//               if (proxy_ == nullptr)
+//               {
+//                   LOG(ERROR) << ("RunFastGameMgr::Initialize INIT FAILED.");
+//                   return -1;
+//               }
 
-    GlobalTimerProxy::getInstance()->NewTimer(std::bind(&RunFastGameMgr::OnRobotTimer, this), 3);
+               proxy_->RegisterCloseHandler(boost::bind(&RunFastGameMgr::OnProxyClose, this, _1));
+               proxy_->RegisterConnectHandler(boost::bind(&RunFastGameMgr::OnProxyConnect, this, _1));
+               proxy_->RegisterMessageHandler(boost::bind(&RunFastGameMgr::OnProxyMessage, this, _1, _2));
 
-    OnWriteOnlineLog();
+               proxy_->Connect(host, assistx2::atoi_s(port));
+           }
+           LOG(INFO) << "Proxy host:=" << host << ", port:=" << port;
+       }
 
-    LOG(INFO) << "--------------------Initialize End-----------------------";
+       match_proxy_ = std::make_shared<MatchProxy>();
+       if (match_proxy_ != nullptr)
+       {
+//           match_proxy_->SetLeaveCallBack(std::bind(&RunFastGameMgr::OnLeaveMatchHall, this, std::placeholders::_1));
+       }
+
+       GlobalTimerProxy::getInstance()->NewTimer(std::bind(&RunFastGameMgr::OnRobotTimer, this), 3);
+
+       OnWriteOnlineLog();
+
+       LOG(INFO) << "--------------------Initialize End-----------------------";
+
+       return 0;
 }
 
 void RunFastGameMgr::ShutDown()
@@ -148,7 +169,7 @@ void RunFastGameMgr::ShutDown()
         roommgr_ = nullptr;
     }
 
-    service_.stop();
+    service_->stop();
 
     RunFastTracer::Destroy();
 }
@@ -196,7 +217,7 @@ std::int32_t RunFastGameMgr::OnMessage(assistx2::TcpHandler * socket, boost::sha
         result.Write(player->GetUID());
         result.Write(std::int32_t(0));
         result.End();
-        gatewayconnector_.SendTo(result.GetNativeStream());
+        gatewayconnector_->SendTo(result.GetNativeStream());
 
         DLOG(INFO) << "RunFastGameMgr::OnEnterMatchHall() g_server_stopped is true";
         return 0;
@@ -253,7 +274,7 @@ std::int32_t RunFastGameMgr::OnClose(assistx2::TcpHandler * handler, assistx2::E
 
     if (g_server_closed == true)
     {
-        service_.stop();
+        service_->stop();
     }
 
     return 0;
@@ -306,7 +327,7 @@ int RunFastGameMgr::OnProxyMessage(assistx2::TcpHandler * socket, boost::shared_
         stream.Write(err);
         stream.Write(amount);
         stream.End();
-        proxy_.SendTo(stream.GetNativeStream());
+        proxy_->SendTo(stream.GetNativeStream());
     }
     break;
     default:
@@ -323,7 +344,7 @@ void RunFastGameMgr::OnProxyTimer()
 
     if (g_server_stopped == false)
     {
-        proxy_.SendTo(heartbeat_stream.GetNativeStream());
+        proxy_->SendTo(heartbeat_stream.GetNativeStream());
     }
 
     GlobalTimerProxy::getInstance()->NewTimer(std::bind(&RunFastGameMgr::OnProxyTimer, this), 9);
@@ -340,7 +361,7 @@ int RunFastGameMgr::OnProxyConnect(assistx2::TcpHandler * handler)
     stream.Write(g_server_id);
     stream.End();
 
-    proxy_.SendTo(stream.GetNativeStream());
+    proxy_->SendTo(stream.GetNativeStream());
 
     return 0;
 }
@@ -357,7 +378,7 @@ void RunFastGameMgr::OnRegister(assistx2::Stream * packet)
     if (err != xProxy::REGISTER_SUCCESS)
     {
         LOG(ERROR) << "RunFastGameMgr::OnMessage.  REGISTER FAILED. err:=" << err;
-        service_.stop();
+        service_->stop();
     }
 }
 
@@ -503,7 +524,7 @@ void RunFastGameMgr::OnRouteMessage(assistx2::Stream * packet)
                 g_server_closed = true;
                 g_server_stopped = true;
 
-                gatewayconnector_.Close();
+                gatewayconnector_->Close();
             }
             else if (op == xProxy::ADMINI_CMD_RELOAD)
             {
@@ -528,7 +549,7 @@ void RunFastGameMgr::OnRouteMessage(assistx2::Stream * packet)
 
 void RunFastGameMgr::OnCloseServer()
 {
-    service_.stop();
+    service_->stop();
 }
 
 void RunFastGameMgr::OnNotifyUpdate()
@@ -543,7 +564,7 @@ void RunFastGameMgr::OnNotifyUpdate()
     stream.Write(1);
     stream.End();
 
-    gatewayconnector_.SendTo(stream.GetNativeStream());
+    gatewayconnector_->SendTo(stream.GetNativeStream());
 
     GlobalTimerProxy::getInstance()->NewTimer(std::bind(&RunFastGameMgr::OnNotifyUpdate, this), 30);
 }
@@ -569,6 +590,6 @@ void RunFastGameMgr::SendServerMessage(std::int32_t mid)
     stream.Write(mid);
     stream.Write(ConfigMgr::getInstance()->server_version());
     stream.End();
-    gatewayconnector_.SendTo(stream.GetNativeStream());
+    gatewayconnector_->SendTo(stream.GetNativeStream());
 }
 

@@ -982,7 +982,7 @@ void PrivateRoom::ReturnGold()
         stream.Write(pay_master);
         stream.Write(amount);
         stream.End();
-        obj_->gatewayconnector()->SendTo(stream.GetNativeStream());
+        gatewayconnector_->SendTo(stream.GetNativeStream());
         if (proxy_mid_ != 0)
         {
             RunFastTracer::getInstance()->WriteGoldLog(pay_master, rfroomcfg_.cost, amount, 5, owner_);

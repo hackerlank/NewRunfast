@@ -20,7 +20,7 @@ public:
     void OnHeartBeat(PlayerInterface * player, assistx2::Stream * packet);
     int32_t GetPlayerRoom(assistx2::Stream * packet);
     void OnRouteMatchServerResult(PlayerInterface * player, assistx2::Stream *packet);
-private:
+//private:
     std::map<uid_type, PlayerInterface * > players_;
 };
 

@@ -10,12 +10,12 @@ class GameDataMgr
 public:
     struct GameData
     {
-        int32_t game_count;  //ÓÎÏ·¾ÖÊı
-        int32_t bomb_count; //Õ¨µ¯ÊıÁ¿
-        int32_t max_score;    //µ¥¾Ö×î¸ßµÃ·Ö
-        int32_t win_count;    //Ê¤¾ÖÊı
-        int32_t lost_count;    //°Ü¾ÖÊı
-        int32_t sum_scroe;    //ÀÛ¼Æ»ı·Ö
+        int32_t game_count;  //æ¸¸æˆå±€æ•°
+        int32_t bomb_count; //ç‚¸å¼¹æ•°é‡
+        int32_t max_score;    //å•å±€æœ€é«˜å¾—åˆ†
+        int32_t win_count;    //èƒœå±€æ•°
+        int32_t lost_count;    //è´¥å±€æ•°
+        int32_t sum_scroe;    //ç´¯è®¡ç§¯åˆ†
     };
 public:
     GameDataMgr();

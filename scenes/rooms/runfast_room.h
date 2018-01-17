@@ -2,7 +2,7 @@
 #define _RUNFAST_ROOM_H_
 
 #include "private_room.h"
-#include "GameDataMgr.h"
+#include "game_data_mgr.h"
 
 class RunFastRoomMgr;
 class PDKPokerReferee;

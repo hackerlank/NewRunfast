@@ -11,7 +11,6 @@ class Table;
 class Seat;
 class RoomEventListener;
 class EventContext;
-class GameObj;
 class RoomBase : public RoomInterface
 {
 public:
@@ -111,8 +110,6 @@ protected:
     std::int32_t cardinal_score_ = 1;
 
     bool is_robot_room = true;
-
-    std::unique_ptr<GameObj> obj_;
 };
 
 #endif //_XPOKER_SRC_ROOMBASE_H_

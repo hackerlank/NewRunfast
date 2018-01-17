@@ -2,7 +2,7 @@
 #define _RUNFAST4_ROOM_H_
 
 #include "private_room.h"
-#include "GameDataMgr.h"
+#include "game_data_mgr.h"
 
 class RunFast4RoomMgr;
 class Run4Referee;

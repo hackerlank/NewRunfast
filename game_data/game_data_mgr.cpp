@@ -1,4 +1,4 @@
-#include "GameDataMgr.h"
+#include "game_data_mgr.h"
 #include <map>
 #include <sstream>
 

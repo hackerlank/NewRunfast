@@ -1,14 +1,15 @@
 #ifndef _RUNFAST_ROOM_MGR_H_
 #define _RUNFAST_ROOM_MGR_H_
 
-#include <assistx2/tcphandler_wrapper.h>
+#include "handle_obj.h"
 #include "xpoker.h"
+
+#include <assistx2/tcphandler_wrapper.h>
 #include <queue>
 
 class RoomEventListener;
 class RoomInterface;
 class PlayerInterface;
-class HandleObj;
 class RunFastRoomMgr:public HandleObj
 {
 public:

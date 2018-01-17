@@ -26,33 +26,34 @@
 class RunFastGameMgr;
 class MatchProxy;
 class MatchHall;
-class HandleObj : public boost::shared_ptr<HandleObj>
+class HandleObj : public std::enable_shared_from_this<HandleObj>
 {
 public:
     HandleObj();
     virtual ~HandleObj();
 
-    virtual void Initialize();
-    virtual std::int32_t OnMessage(assistx2::TcpHandler * socket, boost::shared_ptr<assistx2::NativeStream > native_stream) {return 0;}
-    virtual std::int32_t OnConnect(assistx2::TcpHandler * handler, assistx2::ErrorCode err) {return 0;}
-    virtual std::int32_t OnClose(assistx2::TcpHandler * handler, assistx2::ErrorCode err) {return 0;}
+    void Initialize();
+//    std::int32_t OnMessage(assistx2::TcpHandler * socket, boost::shared_ptr<assistx2::NativeStream > native_stream);
+//    std::int32_t OnConnect(assistx2::TcpHandler * handler, assistx2::ErrorCode err);
+//    std::int32_t OnClose(assistx2::TcpHandler * handler, assistx2::ErrorCode err);
 
-    virtual int OnProxyMessage(assistx2::TcpHandler * socket, boost::shared_ptr< assistx2::NativeStream >  packet) {return 0;}
-    virtual int OnProxyConnect(assistx2::TcpHandler * handler) {return 0;}
-    virtual int OnProxyClose(assistx2::TcpHandler * handler) {return 0;}
+//    int OnProxyMessage(assistx2::TcpHandler * socket, boost::shared_ptr< assistx2::NativeStream >  packet);
+//    int OnProxyConnect(assistx2::TcpHandler * handler);
+//    int OnProxyClose(assistx2::TcpHandler * handler);
 
-    const boost::asio::io_service& service() const {return service_;}
-    const boost::asio::deadline_timer& timer() const {return timer_;}
-    const boost::asio::deadline_timer& event_timer() const {return event_timer_;}
-    const assistx2::TcpHanlderWrapper& gatewayconnector() const {return gatewayconnector_;}
-    const assistx2::TcpHanlderWrapper& proxy() const {return proxy_;}
+//    const boost::asio::io_service& service() const {return service_;}
+//    const boost::asio::deadline_timer& timer() const {return timer_;}
+//    const boost::asio::deadline_timer& event_timer() const {return event_timer_;}
+//    const assistx2::TcpHanlderWrapper& gatewayconnector() const {return gatewayconnector_;}
+//    const assistx2::TcpHanlderWrapper& proxy() const {return proxy_;}
 
 protected:
-    boost::asio::io_service service_;
+    boost::asio::io_service *service_;
     boost::asio::deadline_timer timer_;
     boost::asio::deadline_timer event_timer_;
-    assistx2::TcpHanlderWrapper gatewayconnector_;
-    assistx2::TcpHanlderWrapper proxy_;
+    assistx2::TcpHanlderWrapper *gatewayconnector_;
+    assistx2::TcpHanlderWrapper *proxy_;
+    bool server_stopped_ = false;
 };
 
 #endif // GAMEMESSAGEMGR_H

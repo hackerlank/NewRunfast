@@ -131,7 +131,7 @@ int32_t PlayerBase::PlayCost(PlayerInterface *player, int32_t cost, bool isPayBy
             stream.Write(proxy_mid);
             stream.Write(amount);
             stream.End();
-            gatewayconnector_.SendTo(stream.GetNativeStream());
+            gatewayconnector_->SendTo(stream.GetNativeStream());
 
             RunFastTracer::getInstance()->WriteGoldLog(proxy_mid, -cost, amount, 4, player->GetUID());
             LOG(INFO) << "GoldPay " << ", proxy_mid:=" << proxy_mid << ",delta:" << cost << ",amount:" << amount;

@@ -3,7 +3,7 @@
 #define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <glog/logging.h>
 
-#include "Table.h"
+#include "table.h"
 
 RoomTimer::RoomTimer(boost::asio::io_service & ios):ios_(ios), queue_(nullptr)
 {

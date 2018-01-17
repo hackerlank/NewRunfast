@@ -64,7 +64,7 @@ void MatchProxy::OnEnterMatchHall(PlayerInterface *player, const assistx2::Strea
         stream.Write(RunFast::ErrorCode::ERROR_ENTER_MATCH_HAS_ROOM);
         stream.End();
 
-        gatewayconnector_.SendTo(stream.GetNativeStream());
+        gatewayconnector_->SendTo(stream.GetNativeStream());
         return;
     }
 
@@ -89,5 +89,5 @@ void MatchProxy::RouteMatchServer(PlayerInterface * player, assistx2::Stream& pa
     stream.WriteBinary(std::string(packet.GetNativeStream().GetData(), packet.GetNativeStream().GetSize()));
     stream.End();
 
-    gatewayconnector_.SendTo(stream.GetNativeStream());
+    gatewayconnector_->SendTo(stream.GetNativeStream());
 }

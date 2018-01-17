@@ -3,7 +3,7 @@
 #define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <glog/logging.h>
 #include <glog/stl_logging.h>
-#include "Table.h"
+#include "table.h"
 #include "room_interface.h"
 #include "play_logic.h"
 #include "timer_helper.h"

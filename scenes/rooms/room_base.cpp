@@ -13,7 +13,7 @@
 #include "proxy_cmd.h"
 #include "handle_obj.h"
 
-RoomBase::RoomBase(const boost::int32_t roomid, const roombasecfg_type & cfg): obj_(GameObj::GetInstance()),
+RoomBase::RoomBase(const boost::int32_t roomid, const roombasecfg_type & cfg):
     RoomInterface(roomid), table_(new Table(cfg.type, cfg.seat)), roombasecfg_(cfg)
 {
 
@@ -149,7 +149,7 @@ void RoomBase::BroadCast(assistx2::Stream & packet, const std::vector<std::int32
         packet.Insert(mids.front());
         packet.End();
 
-        obj_->gatewayconnector()->SendTo(packet.GetNativeStream());
+        gatewayconnector_->SendTo(packet.GetNativeStream());
     }
     else 
     {
@@ -165,7 +165,7 @@ void RoomBase::BroadCast(assistx2::Stream & packet, const std::vector<std::int32
 
         stream.End();
 
-        obj_->gatewayconnector()->SendTo(stream.GetNativeStream());
+        gatewayconnector_->SendTo(stream.GetNativeStream());
     }
 }
 
@@ -237,7 +237,7 @@ void RoomBase::SendTo( PlayerInterface * player, const assistx2::Stream & stream
 			assistx2::Stream clone(stream);
 			clone.Insert(player->GetUID() );
 
-            obj_->gatewayconnector()->SendTo(clone.GetNativeStream() );
+            gatewayconnector_->SendTo(clone.GetNativeStream() );
 		}
 	}
 	else

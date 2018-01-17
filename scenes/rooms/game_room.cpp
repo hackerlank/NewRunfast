@@ -6,7 +6,7 @@
 #include "xpoker.h"
 #include "poker_cmd.h"
 #include "player_interface.h"
-#include "Table.h"
+#include "table.h"
 #include "room_listener.h"
 #include "data_layer.h"
 #include "room_timer.h"

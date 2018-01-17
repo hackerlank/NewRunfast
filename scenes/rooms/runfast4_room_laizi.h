@@ -2,8 +2,8 @@
 #define _RUNFAST4_ROOM_LAIZI_H_
 
 #include "private_room.h"
-#include "GameDataMgr.h"
-#include "Run4RefereeLaizi.h"
+#include "game_data_mgr.h"
+#include "run4_referee_laizi.h"
 
 class Run4RefereeLaizi;
 class RunFast4RoomMgr;

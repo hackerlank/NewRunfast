@@ -21,7 +21,7 @@ public:
     virtual ~RunFastGameMgr(void);
     RunFastGameMgr(const RunFastGameMgr& copy);
 
-    virtual void Initialize();
+    virtual std::int32_t Initialize();
     void ShutDown();
 
     std::int32_t OnMessage(assistx2::TcpHandler * socket, boost::shared_ptr<assistx2::NativeStream > native_stream);

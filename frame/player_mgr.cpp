@@ -141,7 +141,7 @@ void PlayerMgr::SendReConnect(const int32_t &mid, const int32_t &roomid, const s
     stream.Write(roomtype);
     stream.End();
 
-    gatewayconnector_.SendTo(stream.GetNativeStream());
+    gatewayconnector_->SendTo(stream.GetNativeStream());
 }
 
 void PlayerMgr::OnHeartBeat(PlayerInterface *player, assistx2::Stream *packet)
@@ -166,7 +166,7 @@ int32_t PlayerMgr::GetPlayerRoom(assistx2::Stream *packet)
     packet->Write(room_id != 0 ? 0 : -1);
     packet->Write(room_id);
     packet->End();
-    gatewayconnector_.SendTo(packet->GetNativeStream());
+    gatewayconnector_->SendTo(packet->GetNativeStream());
 
     return 0;
 }
@@ -185,7 +185,7 @@ void PlayerMgr::OnRouteMatchServerResult(PlayerInterface *player, assistx2::Stre
         stream.Write(RunFast::ErrorCode::ERROR_MATCH_SERVER_CLOSED);
         stream.End();
 
-        gatewayconnector_.SendTo(stream.GetNativeStream());
+        gatewayconnector_->SendTo(stream.GetNativeStream());
 
         auto palyer = GetPlayerInterface(mid);
         if (palyer != nullptr)

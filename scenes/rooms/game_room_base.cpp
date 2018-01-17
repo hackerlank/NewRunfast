@@ -27,13 +27,13 @@ extern boost::int32_t g_server_id;
 
 GameRoomBase::GameRoomBase(const boost::int32_t roomid, const roomcfg_type & cfg)
                            :RoomBase(roomid, cfg), roomcfg_(cfg),
-                           room_timer_(new RoomTimer(obj_->service())), referee_(nullptr), dealer_(Table::INVALID_SEAT), cancel_dealer_(false),
+                           room_timer_(new RoomTimer(*service_)), referee_(nullptr), dealer_(Table::INVALID_SEAT), cancel_dealer_(false),
 						   robot_gold_incr_(0), activeplayer_(Table::INVALID_SEAT),
 						   game_start_time_(0), betting_round_(IDLE_ROUND), baselinedelay_(0), round_taxation_(0),
 						   card_generator_(nullptr), delay_push_trigger_(boost::bind(&GameRoomBase::OnDelayPush, this, _1) ),  
 						   taxation_count_(0)
 {
-     DCHECK(timer != nullptr || timer->Init() == 0);
+//     DCHECK(timer_ != nullptr || timer_->Init() == 0);
 }
 
 GameRoomBase::~GameRoomBase(void)
